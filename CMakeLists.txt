@@ -14,6 +14,9 @@ target_link_libraries(
     ${PROJECT_NAME}
     PRIVATE
     pegtl
+    PUBLIC
+    ftxui::dom
+    ftxui::screen
 )
 set_target_properties(
     ${PROJECT_NAME}
