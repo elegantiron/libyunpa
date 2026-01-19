@@ -4,8 +4,10 @@ module;
 #include <optional>
 #include <stack>
 #include <utility>
+#include <variant>
 
 export module libyunpa:Scene;
+import :Events;
 import :Time;
 
 namespace libyunpa::Engine {
@@ -46,6 +48,10 @@ namespace libyunpa::Engine {
     /// @param[in] gameTime
     virtual void update(const GameTime& gameTime) = 0;
 
+    /// @brief Handle a key press or release event
+    /// @param[in] event
+    virtual void handleEvent(Events::KeyEvent event) = 0;
+
     /// @brief Render the Scene
     [[nodiscard]]
     virtual ftxui::Element render() const
@@ -83,6 +89,7 @@ namespace libyunpa::Engine {
     void setNextScene(ScenePtr nextScene);
     auto getCurrentScene() -> std::optional<ScenePtr>;
     void update(const GameTime& gameTime);
+    void handleEvent(const Event& event);
 
     [[nodiscard]] bool empty() const;
   };
@@ -141,5 +148,22 @@ namespace libyunpa::Engine {
   /// @brief Check whether the manager has any @ref Scene "Scenes"
   bool SceneManager::empty() const {
     return _scenes.empty();
+  }
+
+  template <typename... Ts>
+  struct Overload : Ts... {
+    using Ts::operator()...;
+  };
+
+  template <class... Ts>
+  Overload(Ts...) -> Overload<Ts...>;
+
+  /// @brief Distribute an Event to the active scene
+  /// @param[in] event
+  void SceneManager::handleEvent(const Event& event) {
+    auto handler = Overload(
+        [](std::monostate) {},
+        [&](Events::KeyEvent event) { _scenes.top()->handleEvent(event); });
+    event.visit(handler);
   }
 } // namespace libyunpa::Engine
