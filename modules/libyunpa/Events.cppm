@@ -43,12 +43,18 @@ namespace libyunpa {
      * @brief Represents a key press or release event
      */
     export struct KeyEvent {
-      bool    isKeyDown;
-      Keys    key;
+      /// @brief Whether this represents a key press or release
+      bool isKeyDown;
+      /// @brief The pressed key
+      Keys key;
+      /// @brief Any modifiers when the key was pressed
       KeyMods mods;
     };
   } // namespace Events
 
+  /**
+   * @brief An event for a game to process
+   */
   export using Event = std::variant<std::monostate, Events::KeyEvent>;
 
   using EventCallback = std::function<void(Event)>;
@@ -85,6 +91,7 @@ namespace libyunpa {
 
 #pragma region EventMan
 
+  /// @brief Manages events for a game
   class EventManager {
   private:
     std::atomic_flag _running = false;
@@ -104,8 +111,11 @@ namespace libyunpa {
     EventManager& operator=(EventManager&)  = delete;
     EventManager& operator=(EventManager&&) = delete;
 
+    /// @brief Start monitoring for events
     void start();
+    /// @brief Stop monitoring for events
     void stop();
+    /// @brief Poll for any waiting events
     bool pollEvents(Event& event);
   };
 
