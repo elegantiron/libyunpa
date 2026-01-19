@@ -133,6 +133,10 @@ namespace libyunpa {
         continue;
       }
       auto parserInput = pegtl::memory_input(workingString, "");
+      pegtl::parse<Grammar::Language, Action>(parserInput, [&](Event event) {
+        enqueueEvent(event);
+      });
+      workingString.clear();
     }
   }
 #endif
