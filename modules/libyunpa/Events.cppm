@@ -104,6 +104,7 @@ namespace libyunpa {
     void inputLoop();
 
   public:
+    EventManager() = default;
     ~EventManager();
     EventManager(EventManager&)  = delete;
     EventManager(EventManager&&) = delete;
