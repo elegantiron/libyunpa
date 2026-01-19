@@ -10,6 +10,11 @@ target_compile_features(
     PRIVATE
     cxx_std_20
 )
+target_link_libraries(
+    ${PROJECT_NAME}
+    PRIVATE
+    pegtl
+)
 set_target_properties(
     ${PROJECT_NAME}
     PROPERTIES
@@ -32,6 +37,7 @@ target_compile_options(
 endif()
 set(
     RELATIVE_MODULES
+    Parsing.cppm
     Time.cppm
 )
 foreach(source_file IN LISTS RELATIVE_MODULES)
