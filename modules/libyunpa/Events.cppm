@@ -9,6 +9,7 @@ module;
 #include <conio.h>
 #endif
 export module libyunpa:Events;
+import :Helpers;
 import :Keyboard;
 using namespace tao;
 
@@ -38,6 +39,9 @@ namespace libyunpa {
 #pragma region Events
 
   namespace Events {
+    /**
+     * @brief Represents a key press or release event
+     */
     export struct KeyEvent {
       bool    isKeyDown;
       Keys    key;
@@ -56,6 +60,27 @@ namespace libyunpa {
     template <typename ActionInput>
     static void apply(const ActionInput& /*actionInput*/,
                       const EventCallback& /*eventCallback*/) {}
+  };
+
+  template <>
+  struct Action<Grammar::Win32InputString> {
+    template <typename ActionInput>
+    static void apply(const ActionInput&   actionInput,
+                      const EventCallback& eventCallback) {
+      std::string inputString = actionInput.string();
+
+      inputString                          = inputString.substr(2);
+      auto                  virtualKeyCode = ConvertAndTrim(inputString);
+      [[maybe_unused]] auto scan           = ConvertAndTrim(inputString);
+      [[maybe_unused]] auto unicodeValue   = ConvertAndTrim(inputString);
+      auto                  isKeyDown      = ConvertAndTrim(inputString) == 1;
+      [[maybe_unused]] auto controlKeys    = ConvertAndTrim(inputString);
+
+      auto event = Events::KeyEvent{.isKeyDown = isKeyDown,
+                                    .key       = ConvertMSVK(virtualKeyCode),
+                                    .mods      = KeyMods::NONE};
+      eventCallback(event);
+    }
   };
 
 #pragma region EventMan
