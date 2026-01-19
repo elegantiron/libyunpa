@@ -112,12 +112,9 @@ namespace libyunpa {
     EventManager& operator=(EventManager&)  = delete;
     EventManager& operator=(EventManager&&) = delete;
 
-    /// @brief Start monitoring for events
-    void start();
-    /// @brief Stop monitoring for events
-    void stop();
-    /// @brief Poll for any waiting events
-    bool pollEvents(Event& event);
+    void                 start();
+    void                 stop();
+    std::optional<Event> pollEvents();
   };
 
   EventManager::~EventManager() {
@@ -129,6 +126,7 @@ namespace libyunpa {
     _eventQueue.push(event);
   }
 
+  /// @brief Stop monitoring for events
   void EventManager::stop() {
     if (_running.test()) {
       _running.clear();
@@ -139,6 +137,7 @@ namespace libyunpa {
     }
   }
 
+  /// @brief Start monitoring for events
   void EventManager::start() {
     _running.test_and_set();
     _running.notify_all();
@@ -164,4 +163,15 @@ namespace libyunpa {
     }
   }
 #endif
+  /// @brief Poll for any waiting events
+  /// @returns A std::optional object either containing an Event or not
+  std::optional<Event> EventManager::pollEvents() {
+    std::lock_guard lock(_eventQueueMutex);
+    if (_eventQueue.empty()) {
+      return {};
+    }
+    auto result = _eventQueue.front();
+    _eventQueue.pop();
+    return result;
+  }
 } // namespace libyunpa
