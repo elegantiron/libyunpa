@@ -84,6 +84,7 @@ namespace libyunpa {
     void inputLoop();
 
   public:
+    ~EventManager();
     EventManager(EventManager&)  = delete;
     EventManager(EventManager&&) = delete;
 
@@ -94,6 +95,10 @@ namespace libyunpa {
     void stop();
     bool pollEvents(Event& event);
   };
+
+  EventManager::~EventManager() {
+    stop();
+  }
 
   void EventManager::enqueueEvent(Event event) {
     std::lock_guard lock(_eventQueueMutex);
