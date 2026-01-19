@@ -37,7 +37,7 @@ target_compile_options(
 endif()
 set(
     RELATIVE_MODULES
-    Parsing.cppm
+    Events.cppm
     Time.cppm
 )
 foreach(source_file IN LISTS RELATIVE_MODULES)
