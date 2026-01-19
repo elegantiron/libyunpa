@@ -84,6 +84,12 @@ namespace libyunpa {
     void inputLoop();
 
   public:
+    EventManager(EventManager&)  = delete;
+    EventManager(EventManager&&) = delete;
+
+    EventManager& operator=(EventManager&)  = delete;
+    EventManager& operator=(EventManager&&) = delete;
+
     void start();
     void stop();
     bool pollEvents(Event& event);
