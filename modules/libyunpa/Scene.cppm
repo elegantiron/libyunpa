@@ -83,6 +83,8 @@ namespace libyunpa::Engine {
     void setNextScene(ScenePtr nextScene);
     auto getCurrentScene() -> std::optional<ScenePtr>;
     void update(const GameTime& gameTime);
+
+    [[nodiscard]] bool empty() const;
   };
 
   /// @brief Set the next scene to run
@@ -134,5 +136,10 @@ namespace libyunpa::Engine {
       return;
     }
     _scenes.top()->onReveal();
+  }
+
+  /// @brief Check whether the manager has any @ref Scene "Scenes"
+  bool SceneManager::empty() const {
+    return _scenes.empty();
   }
 } // namespace libyunpa::Engine
