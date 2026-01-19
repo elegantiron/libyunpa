@@ -107,8 +107,8 @@ namespace libyunpa {
 
   void EventManager::stop() {
     if (_running.test()) {
-    _running.clear();
-    _running.notify_all();
+      _running.clear();
+      _running.notify_all();
     }
     if (_inputThread.joinable()) {
       _inputThread.join();
