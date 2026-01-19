@@ -32,7 +32,7 @@ target_compile_options(
 endif()
 set(
     RELATIVE_MODULES
-Time.cppm    
+    Time.cppm
 )
 foreach(source_file IN LISTS RELATIVE_MODULES)
 list(APPEND ABSOLUTE_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/modules/libyunpa/${source_file})
