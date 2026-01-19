@@ -1,6 +1,5 @@
 module;
 #include <atomic>
-#include <cstdint>
 #include <functional>
 #include <queue>
 #include <tao/pegtl.hpp>
@@ -10,6 +9,7 @@ module;
 #include <conio.h>
 #endif
 export module libyunpa:Events;
+import :Keyboard;
 using namespace tao;
 
 namespace libyunpa {
@@ -35,18 +35,6 @@ namespace libyunpa {
     struct Language : pegtl::sor<Win32InputString> {};
   } // namespace Grammar
 
-#pragma region Enums
-  export enum class Keys {
-  };
-
-  // NOLINTNEXTLINE(readability-enum-initial-value)
-  export enum class KeyMods : std::uint8_t {
-    NONE,
-    SHIFT,
-    CTRL,
-    ALT,
-    CONTROL = CTRL
-  };
 #pragma region Events
 
   namespace Events {

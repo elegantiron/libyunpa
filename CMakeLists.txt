@@ -39,6 +39,7 @@ set(
     RELATIVE_MODULES
     Events.cppm
     Helpers.cppm
+    Keyboard.cppm
     Time.cppm
 )
 foreach(source_file IN LISTS RELATIVE_MODULES)
