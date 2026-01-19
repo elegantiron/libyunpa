@@ -7,5 +7,6 @@ target_sources(
     libyunpa/Events.cppm
     libyunpa/Helpers.cppm
     libyunpa/Keyboard.cppm
+    libyunpa/Scene.cppm
     libyunpa/Time.cppm
 )
