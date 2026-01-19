@@ -35,21 +35,5 @@ target_compile_options(
     -O3 -DNDEBUG
 )
 endif()
-set(
-    RELATIVE_MODULES
-    Events.cppm
-    Helpers.cppm
-    Keyboard.cppm
-    Time.cppm
-)
-foreach(source_file IN LISTS RELATIVE_MODULES)
-list(APPEND ABSOLUTE_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/modules/libyunpa/${source_file})
-endforeach()
-list(APPEND ABSOLUTE_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/modules/libyunpa.cppm)
-target_sources(
-    ${PROJECT_NAME}
-    PUBLIC
-    FILE_SET CXX_MODULES
-    FILES
-    ${ABSOLUTE_MODULES}
-)
+add_subdirectory(modules)
+add_subdirectory(docs)

@@ -1,0 +1,12 @@
+find_package(Doxygen COMPONENTS dot REQUIRED)
+set(DOXYGEN_HTML_COLORSTYLE Dark)
+set(DOXYGEN_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/docs/libyunpa")
+set(DOXYGEN_CREATE_SUBDIRS Yes)
+set(DOXYGEN_ENUM_VALUES_PER_LINE 0)
+set(DOXYGEN_EXCLUDE_SYMBOLS Grammar Action)
+doxygen_add_docs(
+    ${PROJECT_NAME}_docs
+    ${PROJECT_SOURCE_DIR}/modules
+    ${PROJECT_SOURCE_DIR}/docs
+    ALL
+)

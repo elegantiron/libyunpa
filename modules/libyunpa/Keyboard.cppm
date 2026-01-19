@@ -3,6 +3,9 @@ module;
 export module libyunpa:Keyboard;
 
 namespace libyunpa {
+  /**
+   * @brief Represents keys on a keyboard.
+   */
   export enum class Keys : std::uint8_t {
     MISSING,
     KEY_A,
@@ -33,6 +36,9 @@ namespace libyunpa {
     KEY_Z
   };
 
+  /**
+   * @brief Represents modifier keys on a keyboard
+   */
   // NOLINTNEXTLINE(readability-enum-initial-value)
   export enum class KeyMods : std::uint8_t {
     NONE,
