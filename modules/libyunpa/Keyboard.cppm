@@ -33,7 +33,21 @@ namespace libyunpa {
     KEY_W,
     KEY_X,
     KEY_Y,
-    KEY_Z
+    KEY_Z,
+    KEY_ARROW_UP,
+    KEY_ARROW_RIGHT,
+    KEY_ARROW_DOWN,
+    KEY_ARROW_LEFT,
+    KP_0,
+    KP_1,
+    KP_2,
+    KP_3,
+    KP_4,
+    KP_5,
+    KP_6,
+    KP_7,
+    KP_8,
+    KP_9
   };
 
   /**
