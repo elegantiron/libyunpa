@@ -1,10 +1,13 @@
 module;
 #include <atomic>
+#include <format>
 #include <functional>
+#include <iostream>
 #include <queue>
 #include <tao/pegtl.hpp>
 #include <thread>
 #include <variant>
+
 #ifdef WIN32
 #include <conio.h>
 #endif
@@ -102,6 +105,7 @@ namespace libyunpa {
 
     void enqueueEvent(Event event);
     void inputLoop();
+    void initializeTerminal();
 
   public:
     EventManager() = default;
@@ -139,6 +143,10 @@ namespace libyunpa {
 
   /// @brief Start monitoring for events
   void EventManager::start() {
+    initializeTerminal();
+    {
+      using enum DecModes;
+    }
     _running.test_and_set();
     _running.notify_all();
     _inputThread = std::thread(&EventManager::inputLoop, this);
@@ -174,4 +182,29 @@ namespace libyunpa {
     _eventQueue.pop();
     return result;
   }
+
+
+
+
+
+#ifdef WIN32
+  void EventManager::initializeTerminal() {
+    auto* inputHandle = GetStdHandle(STD_INPUT_HANDLE);
+    DWORD mode        = (ENABLE_VIRTUAL_TERMINAL_INPUT
+                  bitor ENABLE_MOUSE_INPUT
+                  bitor ENABLE_WINDOW_INPUT
+                  bitor ENABLE_EXTENDED_FLAGS
+                  bitor ENABLE_PROCESSED_INPUT)
+          bitand compl(ENABLE_ECHO_INPUT bitand ENABLE_QUICK_EDIT_MODE);
+    SetConsoleMode(inputHandle, mode);
+
+    auto* outputHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    mode               = (ENABLE_VIRTUAL_TERMINAL_PROCESSING
+            bitor ENABLE_PROCESSED_OUTPUT
+            bitor DISABLE_NEWLINE_AUTO_RETURN);
+    SetConsoleMode(outputHandle, mode);
+    using enum DecModes;
+    DECSET(WIN32_INPUT_MODE);
+  }
+#endif
 } // namespace libyunpa
