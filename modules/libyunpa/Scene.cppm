@@ -45,9 +45,7 @@ namespace libyunpa::Engine {
     virtual void onBury();
     virtual void onReveal();
 
-    /// @brief Update the scene
-    /// @param[in] gameTime
-    virtual void update(const GameTime& gameTime) = 0;
+    virtual void update(const GameTime& gameTime);
 
     /// @brief Handle a key press or release event
     /// @param[in] event
@@ -79,6 +77,14 @@ namespace libyunpa::Engine {
   ScenePtr Scene::getParent() const {
     return _parent;
   }
+
+  Scene::Scene() : Scene(nullptr) {}
+
+  Scene::Scene(ScenePtr parent) : _parent(std::move(parent)) {}
+
+  /// @brief Update the scene
+  /// @param[in] gameTime
+  void Scene::update(const GameTime& /*gameTime*/) {}
 
 #pragma region Manager
 
