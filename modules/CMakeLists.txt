@@ -4,6 +4,7 @@ target_sources(
     FILE_SET CXX_MODULES
     FILES
     libyunpa.cppm
+    libyunpa/Core.cppm
     libyunpa/Events.cppm
     libyunpa/Helpers.cppm
     libyunpa/Keyboard.cppm
