@@ -15,7 +15,7 @@ namespace libyunpa::Engine {
   /// @brief A pointer to a Scene
   export using ScenePtr = std::shared_ptr<Scene>;
 
-  /// @brief A discete part of a game
+  /// @brief A discrete part of a game
   export class Scene {
   private:
     ScenePtr _parent;
