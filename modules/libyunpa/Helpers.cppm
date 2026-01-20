@@ -1,5 +1,9 @@
 module;
+#include <format>
+#include <iostream>
 #include <string>
+#include <utility>
+
 #ifdef WIN32
 #include <windows.h>
 #endif
@@ -47,4 +51,23 @@ namespace libyunpa {
     }
   }
 #endif
+  enum class DecModes : std::uint16_t {
+    APPLICATION_CURSOR_KEYS = 1,
+    AUTO_REPEAT_KEYS        = 8,
+    SHOW_CURSOR             = 25,
+    APPLICATION_KEYPAD_MODE = 66,
+    ANY_EVENT_TRACKING      = 1003,
+    SEND_FOCUS_EVENTS       = 1004,
+    SGR_MOUSE_MODE          = 1006,
+    ALTERNATE_BUFFER        = 1049,
+    WIN32_INPUT_MODE        = 9001
+  };
+
+  void DECSET(DecModes mode) {
+    std::cout << std::format("\x1b[?{}h", std::to_underlying(mode));
+  }
+
+  void DECRST(DecModes mode) {
+    std::cout << std::format("\x1b[?{}l", std::to_underlying(mode));
+  }
 } // namespace libyunpa
