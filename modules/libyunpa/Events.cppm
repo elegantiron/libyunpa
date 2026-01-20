@@ -1,8 +1,6 @@
 module;
 #include <atomic>
-#include <format>
 #include <functional>
-#include <iostream>
 #include <queue>
 #include <tao/pegtl.hpp>
 #include <thread>
@@ -146,6 +144,12 @@ namespace libyunpa {
     initializeTerminal();
     {
       using enum DecModes;
+      DECSET(APPLICATION_CURSOR_KEYS);
+      DECRST(SHOW_CURSOR);
+      DECRST(AUTO_REPEAT_KEYS);
+      DECSET(ANY_EVENT_TRACKING);
+      DECSET(SGR_MOUSE_MODE);
+      DECSET(ALTERNATE_BUFFER);
     }
     _running.test_and_set();
     _running.notify_all();
@@ -182,10 +186,6 @@ namespace libyunpa {
     _eventQueue.pop();
     return result;
   }
-
-
-
-
 
 #ifdef WIN32
   void EventManager::initializeTerminal() {
