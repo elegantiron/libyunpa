@@ -188,6 +188,7 @@ namespace libyunpa {
   }
 
 #ifdef WIN32
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   void EventManager::initializeTerminal() {
     auto* inputHandle = GetStdHandle(STD_INPUT_HANDLE);
     DWORD mode        = (ENABLE_VIRTUAL_TERMINAL_INPUT
