@@ -51,7 +51,7 @@ namespace libyunpa::Engine {
 
     /// @brief Handle a key press or release event
     /// @param[in] event
-    virtual void handleEvent(Events::KeyEvent event) = 0;
+    virtual void handleEvent(const Events::KeyEvent& event) = 0;
 
     /// @brief Render the Scene
     [[nodiscard]]
