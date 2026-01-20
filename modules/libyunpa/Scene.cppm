@@ -39,7 +39,8 @@ namespace libyunpa::Engine {
 
     virtual ~Scene() = default;
 
-    [[nodiscard]] bool wantsExit() const;
+    [[nodiscard]] bool     wantsExit() const;
+    [[nodiscard]] ScenePtr getParent() const;
 
     virtual void onBury();
     virtual void onReveal();
@@ -73,6 +74,11 @@ namespace libyunpa::Engine {
 
   /// @brief Called after this scene is reactivated
   void Scene::onReveal() {}
+
+  /// @brief Get this Scene's parent Scene, if any
+  ScenePtr Scene::getParent() const {
+    return _parent;
+  }
 
 #pragma region Manager
 
