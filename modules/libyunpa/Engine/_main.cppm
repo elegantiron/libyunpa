@@ -6,4 +6,6 @@ module;
  */
 export module libyunpa.Engine;
 export import :Core;
+export import :Events;
+export import :Helpers;
 export import :Scene;
