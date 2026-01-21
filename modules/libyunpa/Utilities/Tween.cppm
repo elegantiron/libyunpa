@@ -1,6 +1,5 @@
 module;
 #include <chrono>
-#include <type_traits>
 
 export module libyunpa.Utilities:Tween;
 import libyunpa.System;
@@ -45,6 +44,7 @@ namespace libyunpa::Utils {
     Duration _length  = ZERO_TIME;
     Duration _elapsed = ZERO_TIME;
     bool     _cycles  = false;
+    bool     _forward = true;
     T        _start;
     T        _end;
 
@@ -83,6 +83,6 @@ namespace libyunpa::Utils {
       return 0;
     }
     auto ratio = _elapsed.count() / _length.count();
-    return static_cast<T>((_end - _start) * ratio);
+    return static_cast<T>((_end - _start) * (_forward ? ratio : 1 - ratio));
   }
 } // namespace libyunpa::Utils
