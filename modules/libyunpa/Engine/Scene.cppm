@@ -1,5 +1,4 @@
 module;
-#include <ftxui/dom/node.hpp>
 #include <memory>
 #include <optional>
 #include <stack>
@@ -9,6 +8,7 @@ module;
 export module libyunpa.Engine:Scene;
 import libyunpa.System;
 import :Events;
+import ftxui;
 
 namespace libyunpa::Engine {
   export class Scene;

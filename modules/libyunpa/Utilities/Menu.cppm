@@ -1,11 +1,11 @@
 module;
-#include <ftxui/dom/elements.hpp>
 #include <string>
 #include <vector>
 
 export module libyunpa.Utilities:Menu;
 import :Helpers;
 import libyunpa.System;
+import ftxui;
 
 namespace libyunpa::Utils {
   /// @brief Options to use when making a Menu

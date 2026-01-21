@@ -1,8 +1,7 @@
 module;
 #include <format>
-#include <ftxui/dom/node.hpp>
-#include <ftxui/screen/screen.hpp>
 #include <iostream>
+#include <memory> // IWYU pragma: export
 #include <optional>
 #include <utility>
 #include <variant>
@@ -11,6 +10,7 @@ export module libyunpa.Engine:Core;
 import :Events;
 import :Scene;
 import libyunpa.System;
+import ftxui;
 
 namespace libyunpa::Engine {
   /// @brief Central class for controlling a game.

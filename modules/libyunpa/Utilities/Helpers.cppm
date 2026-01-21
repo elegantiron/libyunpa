@@ -1,6 +1,5 @@
 module;
 #include <format>
-#include <ftxui/dom/elements.hpp>
 #include <iostream>
 #include <string>
 #include <utility>
@@ -10,9 +9,9 @@ module;
 #endif
 export module libyunpa.Utilities:Helpers;
 import libyunpa.System;
+import ftxui;
 
 namespace libyunpa {
-
 
   /// @brief Options to use when underlining text
   export enum class UnderlineStyle : std::uint8_t {
