@@ -1,6 +1,6 @@
 module;
 #include <cstdint>
-export module libyunpa:Keyboard;
+export module libyunpa.System:Keyboard;
 
 namespace libyunpa {
   /**
@@ -47,7 +47,8 @@ namespace libyunpa {
     KP_6,
     KP_7,
     KP_8,
-    KP_9
+    KP_9,
+    KEY_ESCAPE
   };
 
   /**
@@ -61,5 +62,4 @@ namespace libyunpa {
     ALT,
     CONTROL = CTRL
   };
-
 } // namespace libyunpa

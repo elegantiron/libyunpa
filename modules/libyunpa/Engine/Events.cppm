@@ -1,23 +1,28 @@
 module;
 #include <atomic>
-#include <functional>
+#include <mutex>
+#include <optional>
 #include <queue>
 #include <tao/pegtl.hpp>
 #include <thread>
-#include <variant>
 
 #ifdef WIN32
 #include <conio.h>
-#endif
-export module libyunpa:Events;
-import :Helpers;
-import :Keyboard;
-using namespace tao;
+#include <windows.h>
 
-namespace libyunpa {
+#endif
+
+export module libyunpa.Engine:Events;
+import :Helpers;
+import libyunpa.System;
+
+namespace libyunpa::Engine {
+  using namespace tao;
+
 #pragma region Grammar
 
   namespace Grammar {
+
     struct ESC : pegtl::one<'\x1b'> {};
 
     struct CSI : pegtl::seq<ESC, pegtl::one<'['>> {};
@@ -36,29 +41,6 @@ namespace libyunpa {
 
     struct Language : pegtl::sor<Win32InputString> {};
   } // namespace Grammar
-
-#pragma region Events
-
-  namespace Events {
-    /**
-     * @brief Represents a key press or release event
-     */
-    export struct KeyEvent {
-      /// @brief Whether this represents a key press or release
-      bool isKeyDown;
-      /// @brief The pressed key
-      Keys key;
-      /// @brief Any modifiers when the key was pressed
-      KeyMods mods;
-    };
-  } // namespace Events
-
-  /**
-   * @brief An event for a game to process
-   */
-  export using Event = std::variant<std::monostate, Events::KeyEvent>;
-
-  using EventCallback = std::function<void(Event)>;
 
 #pragma region Actions
 
@@ -89,8 +71,6 @@ namespace libyunpa {
       eventCallback(event);
     }
   };
-
-#pragma region EventMan
 
   /// @brief Manages events for a game
   class EventManager {
@@ -208,4 +188,4 @@ namespace libyunpa {
     DECSET(WIN32_INPUT_MODE);
   }
 #endif
-} // namespace libyunpa
+} // namespace libyunpa::Engine

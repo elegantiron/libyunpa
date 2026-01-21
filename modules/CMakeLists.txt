@@ -4,11 +4,7 @@ target_sources(
     FILE_SET CXX_MODULES
     FILES
     libyunpa.cppm
-    libyunpa/Core.cppm
-    libyunpa/Events.cppm
-    libyunpa/Helpers.cppm
-    libyunpa/Keyboard.cppm
-    libyunpa/Menu.cppm
-    libyunpa/Scene.cppm
-    libyunpa/Time.cppm
 )
+add_subdirectory("libyunpa/Engine")
+add_subdirectory("libyunpa/Utilities")
+add_subdirectory("libyunpa/System")

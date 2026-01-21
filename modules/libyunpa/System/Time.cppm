@@ -1,6 +1,6 @@
 module;
 #include <chrono>
-export module libyunpa:Time;
+export module libyunpa.System:Time;
 
 namespace libyunpa {
   /// @brief A length of time
@@ -8,6 +8,7 @@ namespace libyunpa {
   /// @brief A point in time
   export using TimePoint
       = std::chrono::time_point<std::chrono::steady_clock, Duration>;
+
   constexpr auto ZERO_TIME = std::chrono::milliseconds(0);
 
   /// @brief Manages various clocks and timers for a game

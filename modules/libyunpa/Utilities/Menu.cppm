@@ -3,9 +3,9 @@ module;
 #include <string>
 #include <vector>
 
-export module libyunpa:Menu;
+export module libyunpa.Utilities:Menu;
 import :Helpers;
-import :Keyboard;
+import libyunpa.System;
 
 namespace libyunpa::Utils {
   /// @brief Options to use when making a Menu
@@ -35,9 +35,9 @@ namespace libyunpa::Utils {
   public:
     Menu(MenuOptions options);
     /** @overload */
-    Menu() = default;
+    Menu()       = default;
     /** @overload */
-    Menu(Menu&) = default;
+    Menu(Menu&)  = default;
     /** @overload */
     Menu(Menu&&) = default;
 
@@ -46,7 +46,7 @@ namespace libyunpa::Utils {
     /** @overload */
     Menu& operator=(const Menu&) = default;
     /** @overload */
-    Menu& operator=(Menu&&) = default;
+    Menu& operator=(Menu&&)      = default;
 
     void addItem(std::string_view text);
     void handleKey(Keys key);

@@ -6,9 +6,9 @@ module;
 #include <utility>
 #include <variant>
 
-export module libyunpa:Scene;
+export module libyunpa.Engine:Scene;
+import libyunpa.System;
 import :Events;
-import :Time;
 
 namespace libyunpa::Engine {
   export class Scene;
@@ -35,7 +35,7 @@ namespace libyunpa::Engine {
     /// @brief Copy assignment operator
     Scene& operator=(const Scene&) = default;
     /// @brief Move assignment operator
-    Scene& operator=(Scene&&) = default;
+    Scene& operator=(Scene&&)      = default;
 
     virtual ~Scene() = default;
 

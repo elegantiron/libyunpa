@@ -4,7 +4,7 @@ project(
     VERSION 0.0.1
     LANGUAGES CXX
 )
-add_library(${PROJECT_NAME} SHARED)
+add_library(${PROJECT_NAME})
 target_compile_features(
     ${PROJECT_NAME}
     PRIVATE

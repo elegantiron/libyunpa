@@ -3,26 +3,21 @@ module;
 #include <ftxui/dom/node.hpp>
 #include <ftxui/screen/screen.hpp>
 #include <iostream>
-#include <memory>
 #include <optional>
 #include <utility>
 #include <variant>
 
-export module libyunpa:Core;
+export module libyunpa.Engine:Core;
 import :Events;
 import :Scene;
-import :Time;
+import libyunpa.System;
 
 namespace libyunpa::Engine {
   /// @brief Central class for controlling a game.
   export class Core {
-  private:
-    static std::unique_ptr<Core> _instance;
-    Core();
-
   public:
-    static Core& getInstance();
-    ~Core()      = default;
+    Core()       = delete;
+    ~Core()      = delete;
     Core(Core&)  = delete;
     Core(Core&&) = delete;
 
@@ -30,50 +25,39 @@ namespace libyunpa::Engine {
     Core& operator=(Core&&) = delete;
 
   private:
-    GameTime      _gameTime;
-    SceneManager  _sceneMan;
-    EventManager  _eventMan;
-    ftxui::Screen _screen;
+    static GameTime      _gameTime;
+    static SceneManager  _sceneMan;
+    static EventManager  _eventMan;
+    static ftxui::Screen _screen;
 
-    void gameLoop();
-    void render(const ScenePtr& scene);
+    static void GameLoop();
+    static void Render(const ScenePtr& scene);
 
   public:
-    void setNextScene(ScenePtr nextScene);
-    auto getCurrentScene() -> std::optional<ScenePtr>;
-
-    void run();
+    static void SetNextScene(ScenePtr nextScene);
+    static auto GetCurrentScene() -> std::optional<ScenePtr>;
+    static void Run();
   };
 
-  Core::Core() : _screen(ftxui::Screen::Create(ftxui::Dimension::Full())) {}
-
-  std::unique_ptr<Core> Core::_instance = nullptr;
-
-  /// @brief Get the currently active instance
-  /// @returns A reference to the active instance
-  /// @details An instance is created if one doesn't already exist.
-  Core& Core::getInstance() {
-    if (_instance == nullptr) {
-      // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
-      _instance.reset(new Core());
-    }
-    return *_instance;
-  }
+  GameTime      Core::_gameTime;
+  SceneManager  Core::_sceneMan;
+  EventManager  Core::_eventMan;
+  ftxui::Screen Core::_screen{ftxui::Screen::Create(ftxui::Dimension::Full())};
 
   /// @brief Set the next Scene to run
   /// @param[in] nextScene
-  void Core::setNextScene(ScenePtr nextScene) {
+  void Core::SetNextScene(ScenePtr nextScene) {
     _sceneMan.setNextScene(std::move(nextScene));
   }
 
   /// @brief Get the currently active Scene
   /// @returns An optional object containing the pointer to the current scene or
   /// not.
-  auto Core::getCurrentScene() -> std::optional<ScenePtr> {
+  auto Core::GetCurrentScene() -> std::optional<ScenePtr> {
     return _sceneMan.getCurrentScene();
   }
 
-  void Core::gameLoop() {
+  void Core::GameLoop() {
     while (true) {
       _gameTime.update();
       _sceneMan.update(_gameTime);
@@ -84,25 +68,26 @@ namespace libyunpa::Engine {
         _sceneMan.handleEvent(event.value_or(std::monostate{}));
       }
       _screen.Clear();
-      render(_sceneMan.getCurrentScene().value_or(nullptr));
+      Render(_sceneMan.getCurrentScene().value_or(nullptr));
       std::cout << std::format("\x1b[1;1H{}", _screen.ToString());
     }
   }
 
   /// @brief Run the game
-  void Core::run() {
+  void Core::Run() {
     _eventMan.start();
     _gameTime.reset();
-    gameLoop();
+    GameLoop();
     _eventMan.stop();
   }
 
   // NOLINTNEXTLINE(misc-no-recursion)
-  void Core::render(const ScenePtr& scene) {
+  void Core::Render(const ScenePtr& scene) {
     if (scene == nullptr) {
       return;
     }
-    render(scene->getParent());
+    Render(scene->getParent());
     ftxui::Render(_screen, scene->render());
   }
+
 } // namespace libyunpa::Engine
